@@ -95,7 +95,7 @@ def _nodejs_binary_impl(ctx):
 nodejs_binary = rule(
     _nodejs_binary_impl,
     attrs = {
-        "entry_point": attr.string(),
+        "entry_point": attr.string(mandatory = True),
         "data": attr.label_list(
             allow_files = True,
             cfg = "data",

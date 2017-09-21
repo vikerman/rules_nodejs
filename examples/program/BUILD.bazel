@@ -1,0 +1,7 @@
+load("//:defs.bzl", "nodejs_binary")
+
+nodejs_binary(
+    name = "program",
+    data = ["index.js", "//examples/program/lib"],
+    entry_point = "build_bazel_rules_nodejs/examples/program/index.js",
+)

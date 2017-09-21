@@ -1,0 +1,9 @@
+load("//:defs.bzl", "nodejs_module")
+
+nodejs_module(
+    name = "lib",
+    srcs = ["helper.js"],
+    module_name = "helper",
+    module_root = "helper.js",
+    visibility = ["//examples/program:__subpackages__"],
+)

@@ -83,6 +83,7 @@ const runfilesManifest = loadRunfilesManifest(`${process.env.RUNFILES}_manifest`
 
 function resolveRunfiles(...pathSegments) {
   if (runfilesManifest) {
+    console.error("lookup in manifest", pathSegments.join('/'));
     // Join on forward slash, because even on Windows the runfiles_manifest
     // file is written with forward slash.
     return runfilesManifest[pathSegments.join('/')];
@@ -94,6 +95,7 @@ function resolveRunfiles(...pathSegments) {
 var originalResolveFilename = module.constructor._resolveFilename;
 module.constructor._resolveFilename =
     function(request, parent) {
+  console.error("request", request);
   var failedResolutions = [];
   var resolveLocations = [
     request,

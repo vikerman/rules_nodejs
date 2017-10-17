@@ -61,6 +61,18 @@ def _write_loader_script(ctx):
       executable=True,
   )
 
+def _expand_location_into_runfiles(ctx, input):
+  """Given a string that might contain $(location) expansions,
+   provide the path to the file in runfiles.
+   See https://docs.bazel.build/versions/master/skylark/lib/ctx.html#expand_location
+  """
+  expanded = ctx.expand_location(input, ctx.attr.data)
+  if expanded.startswith(ctx.bin_dir.path):
+    expanded = expanded[len(ctx.bin_dir.path + "/"):]
+  if expanded.startswith(ctx.genfiles_dir.path):
+    expanded = expanded[len(ctx.genfiles_dir.path + "/"):]
+  return ctx.workspace_name + "/" + expanded
+
 def _nodejs_binary_impl(ctx):
     node = ctx.file._node
     node_modules = ctx.files.node_modules
@@ -81,7 +93,9 @@ def _nodejs_binary_impl(ctx):
       ])
     substitutions = {
         "TEMPLATED_node": ctx.workspace_name + "/" + node.path,
-        "TEMPLATED_args": " ".join(ctx.attr.args),
+        "TEMPLATED_args": " ".join([
+            _expand_location_into_runfiles(ctx, a)
+            for a in ctx.attr.templated_args]),
         "TEMPLATED_script_path": script_path,
     }
     # Write the output twice.
@@ -122,6 +136,7 @@ _NODEJS_EXECUTABLE_ATTRS = {
         allow_files = True,
         cfg = "data",
         aspects=[sources_aspect, module_mappings_runtime_aspect]),
+    "templated_args": attr.string_list(),
     "_node": attr.label(
         default = Label("@nodejs//:node"),
         allow_files = True,

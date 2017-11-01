@@ -22,3 +22,13 @@ py_test(
     data = [":check_bazel_version.bzl"],
     size = "small",
 )
+
+load("@io_bazel_skydoc//skylark:skylark.bzl", "skylark_doc")
+
+skylark_doc(
+    name = "docs",
+    srcs = [
+        "jasmine_node_test.bzl",
+        "node.bzl",
+    ],
+)

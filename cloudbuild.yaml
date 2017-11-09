@@ -1,0 +1,4 @@
+steps:
+# Build the Bazel builder and output the version we built with.
+- name: 'gcr.io/cloud-builders/bazel'
+  args: ['run', '@yarn//:yarn']

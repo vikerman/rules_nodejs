@@ -1,0 +1,6 @@
+
+#########################
+# JavaScript Bazel rules
+# This is added automatically by the postinstall script of @bazel/javascript
+local_repository(name = "build_bazel_rules_nodejs", path = "node_modules/@bazel/javascript")
+#########################

@@ -1,7 +1,21 @@
 load("//internal/webpack:webpack_bundle.bzl", "webpack_bundle")
+load("//internal/common:typescript_mock_lib.bzl", "mock_typescript_lib")
+
+genrule(
+    name = "cp_ts_js",
+    srcs = ["foo.ts"],
+    outs = ["foo.js"],
+    cmd = "cp $< $@",
+)
+
+mock_typescript_lib(
+    name = "ts_library",
+    srcs = [":foo.js"],
+)
 
 webpack_bundle(
     name = "test",
-    srcs = glob(["*.js"]),
+    srcs = ["main.js", "lazy.js"],
+    deps = [":ts_library"],
     entry_point = "internal/webpack/test/main.js",
 )

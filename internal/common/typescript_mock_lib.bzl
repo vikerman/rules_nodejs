@@ -29,6 +29,7 @@ def _mock_typescript_lib(ctx):
       runfiles = ctx.runfiles(collect_default=True, collect_data = True),
       typescript = struct(
           es5_sources = es5_sources,
+          transitive_es6_sources = es5_sources,
           transitive_declarations = transitive_decls
       ),
   )

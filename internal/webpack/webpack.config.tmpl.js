@@ -1,15 +1,12 @@
 const webpack = require('webpack');
 
 var webpackConfig = {
-  mode: 'TEMPLATED_mode',
+  mode: 'TMPL_mode',
   entry: {
-    'TEMPLATED_name': './TEMPLATED_entry_point',
+    'TMPL_name': 'TMPL_entry_point',
   },
-  resolve: {
-    modules: ['src', 'node_modules']
-
-  },
-  output: {path: `${process.cwd()}/TEMPLATED_output`}
+  resolve: {modules: ['node_modules']},
+  output: {path: `${process.cwd()}/TMPL_output`}
 };
 
 module.exports = webpackConfig;

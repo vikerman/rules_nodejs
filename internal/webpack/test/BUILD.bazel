@@ -2,4 +2,6 @@ load("//internal/webpack:webpack_bundle.bzl", "webpack_bundle")
 
 webpack_bundle(
     name = "test",
+    srcs = ["main.js"],
+    entry_point = "internal/webpack/test/main.js",
 )

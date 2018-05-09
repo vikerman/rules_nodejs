@@ -19,7 +19,7 @@ load("//:defs.bzl", "nodejs_binary")
 package(default_visibility = ["//internal:__subpackages__"])
 
 exports_files([
-    #"webpack.config.js",
+    "webpack.config.tmpl.js",
 
     # Exported to be consumed for generating skydoc.
     "webpack_bundle.bzl",

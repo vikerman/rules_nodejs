@@ -1,0 +1,5 @@
+load("//internal/webpack:webpack_bundle.bzl", "webpack_bundle")
+
+webpack_bundle(
+    name = "test",
+)

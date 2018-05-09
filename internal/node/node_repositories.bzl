@@ -143,7 +143,7 @@ def _download_yarn(repository_ctx):
 
 def _prepare_node(repository_ctx):
   """Sets up BUILD files and shell wrappers for the versions of NodeJS, npm & yarn just set up.
-  
+
   Windows and other OSes set up the node runtime with different names and paths, which we hide away via
   the BUILD file here.
   In addition, we create a bash script wrapper around NPM that passes a given NPM command to all package.json labels
@@ -331,7 +331,7 @@ def node_repositories(
   """To be run in user's WORKSPACE to install rules_nodejs dependencies.
 
   This rule sets up node, npm, and yarn.
-  
+
   The versions of these tools can be specified in one of three ways:
   - Normal Usage:
     Specify no explicit versions. This will download and use the latest NodeJS & Yarn that were available when the
@@ -428,4 +428,10 @@ def node_repositories(
       name = "build_bazel_rules_nodejs_rollup_deps",
       package_json = "@build_bazel_rules_nodejs//internal/rollup:package.json",
       yarn_lock = "@build_bazel_rules_nodejs//internal/rollup:yarn.lock",
+  )
+
+  yarn_install(
+      name = "build_bazel_rules_nodejs_webpack_deps",
+      package_json = "@build_bazel_rules_nodejs//internal/webpack:package.json",
+      yarn_lock = "@build_bazel_rules_nodejs//internal/webpack:yarn.lock",
   )

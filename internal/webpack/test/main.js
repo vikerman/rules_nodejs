@@ -1,2 +1,2 @@
 console.log('hello');
-document.write('div div');
+const promise = import('./lazy.js');

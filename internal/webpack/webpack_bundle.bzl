@@ -1,7 +1,9 @@
 ### Reusable stuff
 
 WEBPACK_BUNDLE_ATTRS = {
-    "srcs": attr.label_list(allow_files = True),
+    "srcs": attr.label_list(
+        doc = "JavaScript source files",
+        allow_files = [".js"]),
     "entry_point": attr.string(mandatory = True),
     "_webpack": attr.label(
         default=Label("//internal/webpack:webpack-cli"),
@@ -10,8 +12,8 @@ WEBPACK_BUNDLE_ATTRS = {
     "_webpack_config_template": attr.label(
         default = Label("//internal/webpack:webpack.config.tmpl.js"),
         allow_single_file = True),
-
 }
+
 WEBPACK_BUNDLE_OUTPUTS = {
     # FIXME: outputs shouldn't be named after the target
     "bundle": "%{name}.js",

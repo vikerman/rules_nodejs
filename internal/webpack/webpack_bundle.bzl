@@ -64,7 +64,7 @@ def write_config(ctx, label, template, output_dir, entry_point, root_dir = None)
 def run_webpack(actions, executable, label, sources, output_dir, config):
   webpack_args = actions.args()
   webpack_args.add(["--config", config.path])
-  webpack_args.add(["--display", "errors-only"])
+  webpack_args.add(["--log-level", "error"])
   actions.run(
     progress_message = "Webpack bundling %s" % label,
     inputs = sources + [config],

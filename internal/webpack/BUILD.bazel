@@ -27,7 +27,7 @@ exports_files([
 
 nodejs_binary(
     name = "webpack-cli",
-    entry_point = "build_bazel_rules_nodejs_webpack_deps/node_modules/webpack-cli/bin/webpack",
+    entry_point = "build_bazel_rules_nodejs_webpack_deps/node_modules/webpack-command/lib/cli.js",
     node_modules = "@build_bazel_rules_nodejs_webpack_deps//:node_modules",
     visibility = ["//visibility:public"],
 )

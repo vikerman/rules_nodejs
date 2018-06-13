@@ -71,6 +71,9 @@ def run_webpack(actions, executable, label, sources, output_dir, config):
     outputs = [output_dir],
     executable = executable._webpack,
     arguments = [webpack_args],
+    # Don't print warnings to the user if there's an update - the version is
+    # outside the user's control.
+    env = {"NO_UPDATE_NOTIFIER": "1"},
   )
 
 ####

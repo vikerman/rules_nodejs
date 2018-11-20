@@ -1,0 +1,28 @@
+package(default_visibility = ["//visibility:public"])
+
+exports_files(["web_package.bzl"])
+
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+
+filegroup(
+    name = "node_modules_none",
+)
+
+nodejs_binary(
+    name = "assembler",
+    entry_point = "build_bazel_rules_nodejs/internal/web_package/assembler.js",
+    data = ["assembler.js"],
+    node_modules = ":node_modules_none",
+    install_source_map_support = False,
+)
+
+nodejs_binary(
+    name = "injector",
+    entry_point = "build_bazel_rules_nodejs/internal/web_package/injector.js",
+    data = [
+      "injector.js",
+      # FIXME: assumes the user installed a repository "@npm"
+      "@npm//parse5",
+    ],
+    install_source_map_support = False,
+)

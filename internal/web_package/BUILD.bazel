@@ -21,8 +21,7 @@ nodejs_binary(
     entry_point = "build_bazel_rules_nodejs/internal/web_package/injector.js",
     data = [
       "injector.js",
-      # FIXME: assumes the user installed a repository "@npm"
-      "@npm//parse5",
+      "@build_bazel_rules_nodejs_web_package_deps//parse5"
     ],
     install_source_map_support = False,
 )

@@ -93,7 +93,8 @@ module.exports = {main};
 
 function generateRootBuildFile(pkgs) {
   const srcs = pkgs.filter(pkg => !pkg._isNested);
-  const binFiles = listFiles('node_modules/.bin');
+  const binDir = 'node_modules/.bin';
+  const binFiles = fs.existsSync(binDir) ? listFiles(binDir) : [];
 
   let buildFile = BUILD_FILE_HEADER + `# The node_modules directory in one catch-all filegroup.
 # NB: Using this target may have bad performance implications if

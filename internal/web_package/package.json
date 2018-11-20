@@ -1,0 +1,7 @@
+{
+  "name": "@bazel/web_package",
+  "private": true,
+  "dependencies": {
+    "parse5": "~5.1.0"
+  }
+}

@@ -25,8 +25,10 @@ function findElementByName(d, name) {
   if (d.tagName && d.tagName.toLowerCase() === name) {
     return d;
   }
-  if (!treeAdapter.getChildNodes(d)) { return undefined; }
-  for (let i=0; i<treeAdapter.getChildNodes(d).length; i++) {
+  if (!treeAdapter.getChildNodes(d)) {
+    return undefined;
+  }
+  for (let i = 0; i < treeAdapter.getChildNodes(d).length; i++) {
     const f = treeAdapter.getChildNodes(d)[i];
     const result = findElementByName(f, name);
     if (result) return result;

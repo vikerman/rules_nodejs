@@ -1,4 +1,16 @@
-load(":inject_html.bzl", "html_asset_inject")
+def html_asset_inject(index_html, action_factory, injector, assets, output):
+    args = action_factory.args()
+    args.add(output.path)
+    args.add(index_html.path)
+    args.add_all(assets)
+    args.use_param_file("%s", use_always=True)
+    action_factory.run(
+        inputs = [index_html],
+        outputs = [output],
+        executable = injector,
+        arguments = [args],
+    )
+    return output
 
 def move_files(output_name, files, action_factory, assembler):
     www_dir = action_factory.declare_directory(output_name)

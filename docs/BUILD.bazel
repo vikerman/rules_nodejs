@@ -27,6 +27,7 @@ skylark_doc(
         "//internal/npm_package:npm_package.bzl",
         "//internal/rollup:rollup_bundle.bzl",
         "//internal/web_package:web_package.bzl",
+        "//internal/web_package:inject_html.bzl",
     ],
     format = "html",
     site_root = "/rules_nodejs",

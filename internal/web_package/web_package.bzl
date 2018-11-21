@@ -1,17 +1,4 @@
-def html_asset_inject(index_html, action_factory, injector, assets):
-    output = action_factory.declare_file("index.html")
-    args = action_factory.args()
-    args.add(output.path)
-    args.add(index_html.path)
-    args.add_all([f.path for f in assets])
-    args.use_param_file("%s", use_always=True)
-    action_factory.run(
-        inputs = [index_html],
-        outputs = [output],
-        executable = injector,
-        arguments = [args],
-    )
-    return output
+load(":inject_html.bzl", "html_asset_inject")
 
 def move_files(output_name, files, action_factory, assembler):
     www_dir = action_factory.declare_directory(output_name)
@@ -33,7 +20,8 @@ def _web_package(ctx):
         ctx.file.index_html,
         ctx.actions,
         ctx.executable._injector,
-        ctx.files.assets)
+        [f.path for f in ctx.files.assets],
+        ctx.outputs.injected_index)
     package_layout = move_files(
         ctx.label.name,
         ctx.files.data + ctx.files.assets + [populated_index],
@@ -69,6 +57,9 @@ web_package = rule(
             executable = True,
             cfg = "host",
         ),
+    },
+    outputs = {
+        "injected_index": "{}.index.html",
     }
 )
 """

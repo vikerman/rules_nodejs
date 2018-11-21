@@ -31,6 +31,7 @@ load("//internal/npm_package:npm_package.bzl", _npm_package = "npm_package")
 load("//internal/history-server:history_server.bzl", _history_server = "history_server")
 load("//internal/http-server:http_server.bzl", _http_server = "http_server")
 load("//internal/web_package:web_package.bzl", _web_package = "web_package")
+load("//internal/web_package:inject_html.bzl", _inject_html = "inject_html")
 load("//:package.bzl", _check_rules_nodejs_version = "check_rules_nodejs_version")
 
 check_bazel_version = _check_bazel_version
@@ -45,6 +46,7 @@ npm_package = _npm_package
 history_server = _history_server
 http_server = _http_server
 web_package = _web_package
+inject_html = _inject_html
 # ANY RULES ADDED HERE SHOULD BE DOCUMENTED, run yarn skydoc to verify
 
 check_rules_nodejs_version = _check_rules_nodejs_version

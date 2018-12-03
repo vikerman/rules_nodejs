@@ -28,15 +28,16 @@ def move_files(output_name, files, action_factory, assembler):
     return depset([www_dir])
 
 def _web_package(ctx):
+    html = ctx.actions.declare_file("index.html")
     populated_index = html_asset_inject(
         ctx.file.index_html,
         ctx.actions,
         ctx.executable._injector,
         [f.path for f in ctx.files.assets],
-        ctx.outputs.injected_index)
+        html)
     package_layout = move_files(
         ctx.label.name,
-        ctx.files.data + ctx.files.assets + [populated_index],
+        ctx.files.data + ctx.files.assets + [html],
         ctx.actions,
         ctx.executable._assembler)
     return [
@@ -70,9 +71,6 @@ web_package = rule(
             cfg = "host",
         ),
     },
-    outputs = {
-        "injected_index": "{}.index.html",
-    }
 )
 """
 Assembles a web application from source files.

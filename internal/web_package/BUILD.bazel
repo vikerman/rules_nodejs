@@ -2,7 +2,7 @@ package(default_visibility = ["//visibility:public"])
 
 exports_files(["web_package.bzl", "inject_html.bzl"])
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary", "jasmine_node_test")
 
 filegroup(
     name = "node_modules_none",
@@ -24,4 +24,13 @@ nodejs_binary(
       "@build_bazel_rules_nodejs_web_package_deps//parse5"
     ],
     install_source_map_support = False,
+)
+
+jasmine_node_test(
+    name = "injector_test",
+    srcs = ["injector_spec.js"],
+    deps = [
+        "injector.js",
+    ],
+    node_modules = "@build_bazel_rules_nodejs_web_package_deps//:node_modules",
 )

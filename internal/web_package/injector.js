@@ -36,21 +36,19 @@ function findElementByName(d, name) {
   return undefined;
 }
 
-function main(args) {
-  const params = fs.readFileSync(args[0], {encoding: 'utf-8'}).split('\n').filter(l => !!l);
-  const output_file = params.shift();
-  const input_file = params.shift();
+function main(params, read = fs.readFileSync, write = fs.writeFileSync) {
+  const outputFile = params.shift();
+  const inputFile = params.shift();
+  const document = parse5.parse(read(inputFile, {encoding: 'utf-8'}), {treeAdapter});
 
-  const document = parse5.parse(fs.readFileSync(input_file, {encoding: 'utf-8'}), {treeAdapter});
   const body = findElementByName(document, 'body');
   if (!body) {
-    console.error('No <body> tag found in HTML document');
-    return 1;
+    throw ('No <body> tag found in HTML document');
   }
+
   const head = findElementByName(document, 'head');
   if (!head) {
-    console.error('No <head> tag found in HTML document');
-    return 1;
+    throw ('No <head> tag found in HTML document');
   }
 
   for (const s of params.filter(s => /\.js$/.test(s))) {
@@ -70,10 +68,13 @@ function main(args) {
   }
 
   const content = parse5.serialize(document, {treeAdapter});
-  fs.writeFileSync(output_file, content, {encoding: 'utf-8'});
+  write(outputFile, content, {encoding: 'utf-8'});
   return 0;
 }
 
+module.exports = {main};
+
 if (require.main === module) {
-  process.exitCode = main(process.argv.slice(2));
+  const params = fs.readFileSync(args[0], {encoding: 'utf-8'}).split('\n').filter(l => !!l);
+  process.exitCode = main(params);
 }

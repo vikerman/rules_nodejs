@@ -3,7 +3,7 @@ def html_asset_inject(index_html, action_factory, injector, assets, output):
     args.add(output.path)
     args.add(index_html.path)
     args.add_all(assets)
-    args.use_param_file("%s", use_always=True)
+    args.use_param_file("%s", use_always = True)
     action_factory.run(
         inputs = [index_html],
         outputs = [output],
@@ -17,7 +17,7 @@ def move_files(output_name, files, action_factory, assembler):
     args = action_factory.args()
     args.add(www_dir.path)
     args.add_all([f.path for f in files])
-    args.use_param_file("%s", use_always=True)
+    args.use_param_file("%s", use_always = True)
     action_factory.run(
         inputs = files,
         outputs = [www_dir],
@@ -34,26 +34,27 @@ def _web_package(ctx):
         ctx.actions,
         ctx.executable._injector,
         [f.path for f in ctx.files.assets],
-        html)
+        html,
+    )
     package_layout = move_files(
         ctx.label.name,
         ctx.files.data + ctx.files.assets + [html],
         ctx.actions,
-        ctx.executable._assembler)
+        ctx.executable._assembler,
+    )
     return [
-        DefaultInfo(files = package_layout)
+        DefaultInfo(files = package_layout),
     ]
-
 
 web_package = rule(
     implementation = _web_package,
     attrs = {
         "index_html": attr.label(
-            allow_single_file=True,
+            allow_single_file = True,
             doc = """The entry point of the application""",
         ),
         "assets": attr.label_list(
-            allow_files=True,
+            allow_files = True,
             doc = """Files which should be referenced from the index_html""",
         ),
         "data": attr.label_list(
